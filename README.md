@@ -4,7 +4,8 @@
 
 #### Hier findet ihr ein optisch ansprechend gestaltetes Widget für FrSky Sender
 - Fragen zur Lua-Entwicklung unter Ethos gerne hier:
-  https://www.rc-heli.de/member/70685-staebche
+  [Gizmos Gmail](mailto:staebche.ms@gmail.com)
+- Zur Nutzung des Widgets wird NUR der Ordner "scripts" benötigt!
 
 ### Key Facts :
 - Das Widget in der vorliegenden Form ist NUR für die Tandem X18 und X18S !!
@@ -13,7 +14,13 @@
 - Aktuell ist der Heli in der Grafik-Datei festgelegt.
 - Ich werde dies so ändern, dass später das "Model-Image" des Senders genutzt wird.
 - Mehr Telemetrie-Werte stehen für das Modell nicht zur Verfügung.
-- Zur Nutzung des Widgets wird NUR der Ordner "scripts" benötigt!
-- Welche Schritte für die Entwicklung eigener Widgets nötig sind beschreibe ich bald<br> in
+- Welche Schritte für die Entwicklung/Änderung nötig sind beschreibe ich bald<br> in
   einem eigenen Repository. Coming soon...
+
+
+### Erklärung der Ordnerstruktur :
+- Der Ordner ↪️**Convert** spielt bei der Änderung/Erstellung von Widgets eine wichtige Rolle.
+- Im Ordner ↪️**Graphic** liegen die Bilder der Dokumentation und eine .svg-Datei.
+- Die Datei ↪️**M1-Screen.svg** enthält die Grafik-Vorlage für das Widget.
+- Die Grafik wurde mit dem kostenlosen Programm ⚠️️**Inkscape**⚠️ erstellt!
 
