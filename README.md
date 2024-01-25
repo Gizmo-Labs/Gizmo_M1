@@ -6,6 +6,7 @@
 - Fragen zur Lua-Entwicklung unter Ethos gerne hier:
   [Gizmos Gmail](mailto:staebche.ms@gmail.com)
 - Zur Nutzung des Widgets wird NUR der Ordner "scripts" benötigt!
+- Die Installation findet ihr hier : [Installation](./01_Installation.md)
 
 ### Key Facts :
 - Das Widget in der vorliegenden Form ist NUR für die Tandem X18 und X18S !!
