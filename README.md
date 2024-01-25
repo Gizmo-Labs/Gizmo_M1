@@ -17,10 +17,3 @@
 - Welche Schritte für die Entwicklung eigener Widgets nötig sind beschreibe ich bald<br> in
   einem eigenen Repository. Coming soon...
 
-### Verwendung :
-
-- Für die weiteren Schritte wird ein gebundenes Modell vorausgesetzt!
-- Im ersten Schritt wird in der Maske "Bildschirm konfigurieren" ein neuer erstellt.
-- Dieser muss ZWINGEND vom Typ Vollbild sein. Das Widget wurde dafür programmiert.
-
-![Display Settings.png](Graphic%2FDisplay%20Settings.png)
