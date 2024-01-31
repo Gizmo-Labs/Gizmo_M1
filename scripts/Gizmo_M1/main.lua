@@ -33,7 +33,6 @@ local screenSize
 -- Local Variables Flight Timer
 --===================================================
 local FlightTimer
-local FlightTimerValue
 
 --===================================================
 -- Local Variables Receiver (RX)
@@ -51,9 +50,10 @@ local RxSignalSource
 --===================================================
 
 local Time_Temp = 0
-local Debug_Mode = false
-local CurrentFlightMode = ""
+local Debug_Mode = true
 local DrawCycleTicker = 0
+
+local ModelChoice
 
 --===================================================
 -- Convert Timer-Seconds into Timer-Minutes + Seconds
@@ -72,7 +72,7 @@ end
 --===================================================
 -- Draw the Values into the Image Mask
 --===================================================
-local function draw_Values(Me)
+local function draw_Values()
 
 	if Debug_Mode == true then
 		print("Draw Values")
@@ -165,28 +165,10 @@ local function draw_Values(Me)
 	end
 end
 
-
--- --===================================================
--- -- Draw Model Image
--- --===================================================
-
--- local function draw_Model_Image(Me)
-
-	-- if Debug_Mode == true then
-		-- print("Draw Model Name")
-	-- end
-
-	-- if mdlimage ~= nil then
-		-- if (screenSize == "X18fullScreenWithOutTitle") then
-			-- lcd.drawBitmap(28, 54, mdlimage)		
-		-- end	
-	-- end
--- end
-
 --===================================================
 -- Draw background
 --===================================================
-local function draw_background(Me)
+local function draw_background()
 
 	if Debug_Mode == true then
 		print("Draw Background")
@@ -218,20 +200,6 @@ local function draw_background(Me)
 	end
 
 	--=================================================================
-	-- With the Resolution detected, we can choose our Image-Size
-	-- Very important is to load the Bitmap only once !
-	-- Loading it every cycle can block main function of the Tandems...
-	--=================================================================
-	
-	if (screenSize == "X18fullScreenWithOutTitle") then
-		if DrawScreenTicker == 0 then
-			Background = lcd.loadBitmap(imagePath .. "/M1_View.bmp")
-		end
-	end
-
-	DrawScreenTicker = DrawScreenTicker + 1
-
-	--=================================================================
 	-- After one CPU cycle we only draw the bitmap
 	-- Sometimes it get not loaded at the first try --> load again 
 	-- This is a major difference compared to loading it...
@@ -249,11 +217,51 @@ local function draw_background(Me)
 			if (Background ~= nil) then
 				lcd.drawBitmap(0, 0, Background)
 			else
-				Background = lcd.loadBitmap(imagePath .. "/M1_View.bmp")
-				lcd.drawBitmap(0, 0, Background)			
+				---Background = lcd.loadBitmap(imagePath.."/M1_Yellow_Akku.bmp")
+				lcd.drawBitmap(0, 0, Background)
 			end
 		end	
 	end
+
+	--=================================================================
+	-- With the Resolution detected, we can choose our Image-Size
+	-- Very important is to load the Bitmap only once !
+	-- Loading it every cycle can block main function of the Tandems...
+	--=================================================================
+
+	if (screenSize == "X18fullScreenWithOutTitle") then
+		if DrawScreenTicker == 0 then
+			if (ModelChoice == nil) or (ModelChoice == 1) then
+				Background = lcd.loadBitmap(imagePath.."/M1_Yellow_Akku.bmp")
+			elseif (ModelChoice == 2) then
+				Background = lcd.loadBitmap(imagePath.."/M1_Yellow_RxBatt.bmp")
+			elseif (ModelChoice == 3) then
+				Background = lcd.loadBitmap(imagePath.."/M1_Purple_Akku.bmp")
+			elseif (ModelChoice == 4) then
+				Background = lcd.loadBitmap(imagePath.."/M1_Purple_RxBatt.bmp")
+			elseif (ModelChoice == 5) then
+				Background = lcd.loadBitmap(imagePath.."/M1_Evo_Yellow_Akku.bmp")
+			elseif (ModelChoice == 6) then
+				Background = lcd.loadBitmap(imagePath.."/M1_Evo_Yellow_RxBatt.bmp")
+			elseif (ModelChoice == 7) then
+				Background = lcd.loadBitmap(imagePath.."/M1_Evo_Orange_Akku.bmp")
+			elseif (ModelChoice == 8) then
+				Background = lcd.loadBitmap(imagePath.."/M1_Evo_Orange_RxBatt.bmp")
+			elseif (ModelChoice == 9) then
+				Background = lcd.loadBitmap(imagePath.."/M1_Evo_Red_Akku.bmp")
+			elseif (ModelChoice == 10) then
+				Background = lcd.loadBitmap(imagePath.."/M1_Evo_Red_RxBatt.bmp")
+			elseif (ModelChoice == 11) then
+				Background = lcd.loadBitmap(imagePath.."/M1_Evo_White_Akku.bmp")
+			elseif (ModelChoice == 12) then
+				Background = lcd.loadBitmap(imagePath.."/M1_Evo_White_RxBatt.bmp")
+			else
+				Background = lcd.loadBitmap(imagePath.."/M1_Yellow_Akku.bmp")
+			end
+		end
+	end
+
+	DrawScreenTicker = DrawScreenTicker + 1
 end
 
 
@@ -293,12 +301,12 @@ local function paint(widget)
 	if Debug_Mode == true then
 		print("Paint Widget")
 	end
-	
+
 	--===================================================
-	-- After one CPU cycle we load the model image
+	-- Fetch the Model from Widget-Choice-Field
 	--===================================================
-	if DrawCycleTicker == 1 then
-		mdlimage = lcd.loadBitmap(model.bitmap()) -- Load model Image from memory		
+	if widget.model ~= nil then
+		ModelChoice = widget.model
 	end
     
     --===================================================
@@ -322,8 +330,8 @@ local function paint(widget)
 		DrawScreenTicker = 0		
 	end
 
-	draw_background(Me)	
-	draw_Values(Me)
+	draw_background()
+	draw_Values()
 
 	DrawCycleTicker = DrawCycleTicker + 1
 
@@ -343,6 +351,12 @@ local function configure(widget)
 	
 	-- Sensor Source configuration
 	line = form.addLine("Telemetrie Einstellungen:")
+	
+	line = form.addLine("M1 Modellauswahl")
+	form.addChoiceField(line, nil, {{"M1 Gelb --> Akku", 1}, {"M1 Gelb --> Rx", 2}, {"M1 Purple --> Akku", 3}, {"M1 Purple --> Rx", 4},
+									{"M1 Evo Gelb --> Akku", 5}, {"M1 Evo Gelb --> Rx", 6} , {"M1 Evo Orange --> Akku", 7}, {"M1 Evo Orange --> Rx", 8},
+									{"M1 Evo Rot --> Akku", 9}, {"M1 Evo Rot --> Rx", 10}, {"M1 Evo Weiß --> Akku", 11}, {"M1 Evo Weiß --> Rx", 12}
+									}, function() return widget.model end, function(value) widget.model = value end)
 
 	-- Field for Rx-Battery
 	line = form.addLine("Empfänger Akkuspannung")
@@ -350,7 +364,7 @@ local function configure(widget)
 	
 	-- Field for Rx-Signal
 	line = form.addLine("Empfänger RSSI")
-    form.addSourceField(line, nil, function() return widget.RxSignalSource end, function(value) widget.RxSignalSource = value end)	
+	form.addSourceField(line, nil, function() return widget.RxSignalSource end, function(value) widget.RxSignalSource = value end)
 end
 
 --===================================================
@@ -358,7 +372,8 @@ end
 --===================================================
 local function read(widget)		
 	widget.RxBattSource	        	= storage.read ("RxBattSource")
-	widget.RxSignalSource	    	= storage.read ("RxSignalSource")	
+	widget.RxSignalSource	    	= storage.read ("RxSignalSource")
+	widget.model					= storage.read ("ModelChoice")
 end
 
 --===================================================
@@ -366,7 +381,8 @@ end
 --===================================================
 local function write(widget)	
 	storage.write("RxBattSource"			, widget.RxBattSource)
-	storage.write("RxSignalSource"			, widget.RxSignalSource)	
+	storage.write("RxSignalSource"			, widget.RxSignalSource)
+	storage.write("ModelChoice"              , widget.model)
 end
 
 --===================================================

@@ -1,6 +1,14 @@
 # FrSky ETHOS Widget für OMP Hobby M1
 
-![Only Widget.png](Graphic%2FOnly%20Widget.png)
+![New Version](Graphic/Widget%20HowTo/New%20Version.png)
+
+#### Changelog:
+- Neu [31.01.2024] ⚠️️**Alle M1 Modelle können im Widget konfiguriert werden**⚠️
+- ToBeDone:<br>
+⛔**Anzeigewerte für Evo Modelle anpassen**⛔<br>
+⛔**M1 Schriftzug umstellen auf weiß**⛔<br>
+⛔**Support für X20 und X20S implementieren**⛔<br>
+⛔**Version mit Ethos Titel-Leiste integrieren**⛔
 
 #### Hier findet ihr ein optisch ansprechend gestaltetes Widget für FrSky Sender
 - Fragen zur Lua-Entwicklung unter Ethos gerne hier:
