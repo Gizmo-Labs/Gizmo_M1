@@ -53,7 +53,7 @@
 
 - Dann auf ↪️**Konfigurieren** klicken.
  
-![Widget Configuration.png](Graphic/Widget%20HowTo/Widget%20Configuration.png)
+![Configuration Screen.png](Graphic/Widget%20HowTo/Widget%20Configuration1.png)
 
 - Es öffnet sich die Konfigration für das Widget
 - Unter ↪️**Widget** unser ↪️**Gizmo M1** auswählen.
@@ -63,12 +63,13 @@
 - Es sind alle derzeit bekannten Modelle hinterlegt.
 - Für jeden Typ kann die Anzeige entweder mit Akkuspannung<br>
   oder Empfängerspannung in der Anzeige gewählt werden.
+- Die Schriftfarbe kann passend zum Hintergrund ausgewählt werden.
 - In den beiden Telemetrie-Feldern können nun die vom OMP Hobby M1<br>
   übertragenenen Parameter ausgewählt werden.
 - ⚠️Modell muss gebunden sein⚠️
 - ⚠️️Eventuell zuerst im Menü "Telemetrie" die Sensoren suchen⚠️
 
-![Configuration Screen.png](Graphic/Widget%20HowTo/Configuration%20Screen.png)
+![Configuration Screen.png](Graphic/Widget%20HowTo/Widget%20Configuration2.png)
 
 - Das Anzeigefeld ↪️**MODE** zeigt die ↪️**Flugphase** an.
 - Wo diese definiert wird, sollte jeder Pilot wissen!
@@ -76,4 +77,4 @@
 - Das Anzeigefeld ↪️**Flugzeit** zeigt die ⚠️**erste**⚠️ hinterlegte Stoppuhr an!
 - ⛔**Ende der Durchsage**⛔ Und viel Spaß damit!
   
-![Only Widget](Graphic/Widget%20HowTo/Widget%20Screen.png)
+![Only Widget](Graphic/Widget%20HowTo/Widget-View.png)
