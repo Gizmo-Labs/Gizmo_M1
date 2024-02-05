@@ -12,13 +12,13 @@
 -  Die Karte muss mit ihrem Aufdruck nach ⚠️️**hinten**⚠️ in den Sender gesteckt werden.
 -  Im Sender unter ↪️**General** den Punkt ↪️**Scripte** auf ↪️**SD-Karte** stellen. 
 
-![General Settings for SD.png](Graphic/Widget%20HowTo/General%20Settings%20for%20SD.png)
+![General Settings for SD.png](Grafik-Rohdateien/Widget%20HowTo/General%20Settings%20for%20SD.png)
 
 - Wir wechseln nun zum ↪️**Datei-Manager**.
 - Dort sollten wir nun unseren Ordner ↪️**scripts** sehen.
 - Hat alles geklappt, sehen wir unsere Widgets mit ihrem Klartextnamen.
 
-![Scripts on SD-Card.png](Graphic/Widget%20HowTo/Scripts%20on%20SD-Card.png)
+![Scripts on SD-Card.png](Grafik-Rohdateien/Widget%20HowTo/Scripts%20on%20SD-Card.png)
 
 ## 📌 Und dann für das Speichern im Sender
 
@@ -26,19 +26,19 @@
 - Dann per USB-Kabel mit dem Rechner verbinden.
 - Den Punkt ↪️**Ethos Suite** wählen.
 
-![USB Connection.png](Graphic/Widget%20HowTo/USB%20Connection.png)
+![USB Connection.png](Grafik-Rohdateien/Widget%20HowTo/USB%20Connection.png)
 
 - Nun sollten im Betriebs-System (hier Windows 11) die Laufwerke auftauchen.
 - FLASH ist dabei der Flash-Speicher des Senders. Diesen benötigen wir nicht.
 - NAND ist der eigentliche Senderspeicher. Diesen wollen wir nutzen.
 -  **Nur** den Ordner "scripts" auf das Laufwerk ↪️**NAND** kopieren
 
-![Drives on PC.png](Graphic/Widget%20HowTo/Drives%20on%20PC.png)
+![Drives on PC.png](Grafik-Rohdateien/Widget%20HowTo/Drives%20on%20PC.png)
 
 - Nun können wir den Sender wieder vom PC abstecken.
 - Im Sender unter ↪️**General** den Punkt ↪️**Scripte** auf ↪️**Sender** stellen. 
 
-![General Settings for NAND.png](Graphic/Widget%20HowTo/General%20Settings%20for%20NAND.png)
+![General Settings for NAND.png](Grafik-Rohdateien/Widget%20HowTo/General%20Settings%20for%20NAND.png)
 
 ## 📌 Nun die Konfiguration des Widgets
 
@@ -49,11 +49,11 @@
 - Im ersten Schritt wird in der Maske "Bildschirm konfigurieren" ein neuer erstellt.
 - Dieser ⚠️️**muss**⚠️ vom Typ Vollbild sein. Das Widget wurde ⚠️️**nur**⚠️ dafür programmiert.
 
-![Display Settings.png](Graphic/Widget%20HowTo/Display%20Settings.png)
+![Display Settings.png](Grafik-Rohdateien/Widget%20HowTo/Display%20Settings.png)
 
 - Dann auf ↪️**Konfigurieren** klicken.
  
-![Configuration Screen.png](Graphic/Widget%20HowTo/Widget%20Configuration1.png)
+![Configuration Screen.png](Grafik-Rohdateien/Widget%20HowTo/Configuration%20Screen.png)
 
 - Es öffnet sich die Konfigration für das Widget
 - Unter ↪️**Widget** unser ↪️**Gizmo M1** auswählen.
@@ -69,7 +69,7 @@
 - ⚠️Modell muss gebunden sein⚠️
 - ⚠️️Eventuell zuerst im Menü "Telemetrie" die Sensoren suchen⚠️
 
-![Configuration Screen.png](Graphic/Widget%20HowTo/Widget%20Configuration2.png)
+![Configuration Screen.png](Grafik-Rohdateien/Widget%20HowTo/Widget%20Configuration2.png)
 
 - Das Anzeigefeld ↪️**MODE** zeigt die ↪️**Flugphase** an.
 - Wo diese definiert wird, sollte jeder Pilot wissen!
@@ -77,4 +77,4 @@
 - Das Anzeigefeld ↪️**Flugzeit** zeigt die ⚠️**erste**⚠️ hinterlegte Stoppuhr an!
 - ⛔**Ende der Durchsage**⛔ Und viel Spaß damit!
   
-![Only Widget](Graphic/Widget%20HowTo/Widget-View.png)
+![Only Widget](Grafik-Rohdateien/Widget%20HowTo/Widget-View.png)
