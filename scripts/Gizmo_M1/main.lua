@@ -51,7 +51,7 @@ local RxSignalSource
 
 local DrawCycleTicker = 0
 local Time_Temp = 0
-local Debug_Mode = false
+local Debug_Mode = true
 local ModelChoice
 
 --===================================================
@@ -74,6 +74,86 @@ local function draw_Values(widget)
 
     if Debug_Mode == true then
         print("Zeichne Anzeigewerte")
+    end
+
+    ---===================================================
+    -- Anzeige für Tandem X14 und X14s mit Titel auf AUS
+    --===================================================
+    if (screenSize == "X14fullScreenWithOutTitle") then
+
+        DrawScreenTicker = DrawScreenTicker + 1
+
+        --=================================================================
+        -- Zeige die Flugphasen an
+        -- falls keine vorhanden sind zeige "----" in der Anzeige an
+        --=================================================================
+        lcd.font(FONT_ITALIC)
+        lcd.color(fontcolor)
+
+        CurrentFlightMode = system.getSource({ category = CATEGORY_FLIGHT_VALUE, member = CURRENT_FLIGHT_MODE }):stringValue()
+
+        if CurrentFlightMode ~= nil then
+            lcd.drawText(226, 18, string.format("%s", CurrentFlightMode), CENTERED)
+        end
+
+        --=================================================================
+        -- Zeige die erste Stoppuhr an
+        -- falls keine vorhanden ist zeige "----" in der Anzeige an
+        --=================================================================
+        FlightTimer = system.getSource({ category = CATEGORY_TIMER, member = 0, options = 0 })
+
+        if FlightTimer ~= nil then
+            lcd.drawText(208, 278, convert_Timer(FlightTimer:value()), 0, 0, CENTERED)			
+        else
+            lcd.drawText(234, 278, "----")
+        end
+
+        --=================================================================
+        -- Lese den Systemwert für Sender-Akkuspannung aus
+        --=================================================================
+        TxBatt = system.getSource({ category = CATEGORY_SYSTEM, member = MAIN_VOLTAGE })
+
+        if TxBatt ~= nil then
+            TxBattValue = TxBatt:value()
+            lcd.drawNumber(512, 187, TxBattValue, 0, 2, CENTERED)			
+        else
+            lcd.drawText(498, 186, "----")
+        end
+
+        --=================================================================
+        -- Wenn ein Sensor für Empfänger-Akkuspannung definiert ist zeige den Wert an
+        -- alternativ wird die Flugakkuspannung angezeigt, wenn der Empfänger am Flugakku hängt
+        -- falls nicht zeige "----" in der Anzeige an
+        --=================================================================
+        if RxBattSource ~= nil then
+            RxBatt = system.getSource(RxBattSource)
+        else
+            RxBatt = nil
+        end
+
+        if RxBatt ~= nil then
+            RxBattValue = RxBatt:value()
+            lcd.drawNumber(512, 232, RxBattValue, 0, 2, CENTERED)			
+        else
+            lcd.drawText(498, 230, "----")			
+        end
+
+        --=================================================================
+        -- Wenn ein Sensor für Empfänger RSSI definiert ist zeige den Wert an
+        -- falls nicht zeige "----" in der Anzeige an
+        --=================================================================
+        if RxSignalSource ~= nil then
+            RxSignal = system.getSource(RxSignalSource)
+        else
+            RxSignal = nil
+        end
+
+        if RxSignal ~= nil then
+            RxSignalValue = RxSignal:value()
+            lcd.drawNumber(196, 318, RxSignalValue, 0, 0, CENTERED)
+        else
+            lcd.drawText(182, 316, "----")			
+        end
     end
 
     ---===================================================
@@ -256,6 +336,8 @@ local function draw_background(widget)
     -- 800 x 480 --> Tandem X20 mit "Title AUS Option" aka. FullScreen
     -- 480 x 301 --> Tandem X18 mit "Title EIN Option"
     -- 480 x 320 --> Tandem X18 mit "Title AUS Option" aka. FullScreen
+    -- 640 x 338 --> Twin X14 mit "Title EIN Option"
+    -- 640 x 360 --> Twin X14 mit "Title AUS Option" aka. FullScreen
     --=================================================================
     w2, h2 = lcd.getWindowSize()
 
@@ -299,6 +381,18 @@ local function draw_background(widget)
         if (DrawScreenTicker > 0) then
             lcd.drawBitmap(0, 0, Background)
         end
+    elseif w2 == 640 and h2 == 338 then
+        screenSize = "X14fullScreenWithTitle"
+
+        if (DrawScreenTicker > 0) then
+            lcd.drawText(110, 130, "Widget funktioniert nur mit Titel auf AUS!")
+        end
+    elseif w2 == 640 and h2 == 360 then
+        screenSize = "X14fullScreenWithOutTitle"
+
+        if (DrawScreenTicker > 0) then
+            lcd.drawBitmap(0, 0, Background)
+        end
     end
 
     --=================================================================
@@ -307,6 +401,42 @@ local function draw_background(widget)
     -- Deshalb tun wir das nur im ersten CPU-Zyklus!
     -- Dauerhaftes laden kann andere wichtige Funktionen stören!
     --=================================================================
+    if (screenSize == "X14fullScreenWithOutTitle") then
+        if DrawScreenTicker == 0 then
+            if (ModelChoice == nil) or (ModelChoice == 1) then
+                Background = lcd.loadBitmap(imagePath .. "/M1_Yellow_Akku_X14.bmp")
+            elseif (ModelChoice == 2) then
+                Background = lcd.loadBitmap(imagePath .. "/M1_Yellow_RxBatt_X14.bmp")
+            elseif (ModelChoice == 3) then
+                Background = lcd.loadBitmap(imagePath .. "/M1_Purple_Akku_X14.bmp")
+            elseif (ModelChoice == 4) then
+                Background = lcd.loadBitmap(imagePath .. "/M1_Purple_RxBatt_X14.bmp")
+            elseif (ModelChoice == 5) then
+                Background = lcd.loadBitmap(imagePath .. "/M1_Orange_Akku_X14.bmp")
+			elseif (ModelChoice == 6) then
+                Background = lcd.loadBitmap(imagePath .. "/M1_Orange_RxBatt_X14.bmp")
+			elseif (ModelChoice == 7) then
+                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_Yellow_Akku_X14.bmp")
+            elseif (ModelChoice == 8) then
+                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_Yellow_RxBatt_X14.bmp")
+            elseif (ModelChoice == 9) then
+                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_Orange_Akku_X14.bmp")
+            elseif (ModelChoice == 10) then
+                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_Orange_RxBatt_X14.bmp")
+            elseif (ModelChoice == 11) then
+                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_Red_Akku_X14.bmp")
+            elseif (ModelChoice == 12) then
+                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_Red_RxBatt_X14.bmp")
+            elseif (ModelChoice == 13) then
+                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_White_Akku_X14.bmp")
+            elseif (ModelChoice == 14) then
+                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_White_RxBatt_X14.bmp")
+            else
+                Background = lcd.loadBitmap(imagePath .. "/M1_Yellow_Akku_X14.bmp")
+            end
+        end
+    end
+
     if (screenSize == "X18fullScreenWithOutTitle") then
         if DrawScreenTicker == 0 then
             if (ModelChoice == nil) or (ModelChoice == 1) then
@@ -318,20 +448,24 @@ local function draw_background(widget)
             elseif (ModelChoice == 4) then
                 Background = lcd.loadBitmap(imagePath .. "/M1_Purple_RxBatt_X18.bmp")
             elseif (ModelChoice == 5) then
+                Background = lcd.loadBitmap(imagePath .. "/M1_Orange_Akku_X18.bmp")
+			elseif (ModelChoice == 6) then
+                Background = lcd.loadBitmap(imagePath .. "/M1_Orange_RxBatt_X18.bmp")			
+			elseif (ModelChoice == 7) then
                 Background = lcd.loadBitmap(imagePath .. "/M1_Evo_Yellow_Akku_X18.bmp")
-            elseif (ModelChoice == 6) then
-                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_Yellow_RxBatt_X18.bmp")
-            elseif (ModelChoice == 7) then
-                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_Orange_Akku_X18.bmp")
             elseif (ModelChoice == 8) then
-                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_Orange_RxBatt_X18.bmp")
+                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_Yellow_RxBatt_X18.bmp")
             elseif (ModelChoice == 9) then
-                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_Red_Akku_X18.bmp")
+                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_Orange_Akku_X18.bmp")
             elseif (ModelChoice == 10) then
-                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_Red_RxBatt_X18.bmp")
+                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_Orange_RxBatt_X18.bmp")
             elseif (ModelChoice == 11) then
-                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_White_Akku_X18.bmp")
+                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_Red_Akku_X18.bmp")
             elseif (ModelChoice == 12) then
+                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_Red_RxBatt_X18.bmp")
+            elseif (ModelChoice == 13) then
+                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_White_Akku_X18.bmp")
+            elseif (ModelChoice == 14) then
                 Background = lcd.loadBitmap(imagePath .. "/M1_Evo_White_RxBatt_X18.bmp")
             else
                 Background = lcd.loadBitmap(imagePath .. "/M1_Yellow_Akku_X18.bmp")
@@ -350,20 +484,24 @@ local function draw_background(widget)
             elseif (ModelChoice == 4) then
                 Background = lcd.loadBitmap(imagePath .. "/M1_Purple_RxBatt_X20.bmp")
             elseif (ModelChoice == 5) then
+                Background = lcd.loadBitmap(imagePath .. "/M1_Orange_Akku_X20.bmp")
+			elseif (ModelChoice == 6) then
+                Background = lcd.loadBitmap(imagePath .. "/M1_Orange_RxBatt_X20.bmp")			
+			elseif (ModelChoice == 7) then			
                 Background = lcd.loadBitmap(imagePath .. "/M1_Evo_Yellow_Akku_X20.bmp")
-            elseif (ModelChoice == 6) then
-                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_Yellow_RxBatt_X20.bmp")
-            elseif (ModelChoice == 7) then
-                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_Orange_Akku_X20.bmp")
             elseif (ModelChoice == 8) then
-                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_Orange_RxBatt_X20.bmp")
+                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_Yellow_RxBatt_X20.bmp")
             elseif (ModelChoice == 9) then
-                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_Red_Akku_X20.bmp")
+                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_Orange_Akku_X20.bmp")
             elseif (ModelChoice == 10) then
-                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_Red_RxBatt_X20.bmp")
+                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_Orange_RxBatt_X20.bmp")
             elseif (ModelChoice == 11) then
-                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_White_Akku_X20.bmp")
+                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_Red_Akku_X20.bmp")
             elseif (ModelChoice == 12) then
+                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_Red_RxBatt_X20.bmp")
+            elseif (ModelChoice == 13) then
+                Background = lcd.loadBitmap(imagePath .. "/M1_Evo_White_Akku_X20.bmp")
+            elseif (ModelChoice == 14) then
                 Background = lcd.loadBitmap(imagePath .. "/M1_Evo_White_RxBatt_X20.bmp")
             else
                 Background = lcd.loadBitmap(imagePath .. "/M1_Yellow_Akku_X20.bmp")
@@ -489,8 +627,9 @@ local function configure(widget)
     -- Modelltyp auswählen
     line = form.addLine("M1 Modellauswahl")
     form.addChoiceField(line, nil, { { "M1 Gelb --> Akku", 1 }, { "M1 Gelb --> Rx", 2 }, { "M1 Purple --> Akku", 3 }, { "M1 Purple --> Rx", 4 },
-                                     { "M1 Evo Gelb --> Akku", 5 }, { "M1 Evo Gelb --> Rx", 6 }, { "M1 Evo Orange --> Akku", 7 }, { "M1 Evo Orange --> Rx", 8 },
-                                     { "M1 Evo Rot --> Akku", 9 }, { "M1 Evo Rot --> Rx", 10 }, { "M1 Evo Weiß --> Akku", 11 }, { "M1 Evo Weiß --> Rx", 12 }
+									 { "M1 Orange --> Akku", 5 }, { "M1 Orange --> Rx", 6 }, { "M1 Evo Gelb --> Akku", 7 }, { "M1 Evo Gelb --> Rx", 8 }, 
+									 { "M1 Evo Orange --> Akku", 9 }, { "M1 Evo Orange --> Rx", 10 }, { "M1 Evo Rot --> Akku", 11 }, { "M1 Evo Rot --> Rx", 12 }, 
+									 { "M1 Evo Weiß --> Akku", 13 }, { "M1 Evo Weiß --> Rx", 14 }
     }, function()
         if widget.model == nil then
             return 1
