@@ -1,6 +1,6 @@
 # FrSky ETHOS Widget für OMP Hobby M1
 
-![New Version](Graphic/Widget%20HowTo/New%20Version.png)
+![New Version](Grafik-Rohdateien/Widget%20HowTo/Widget-View.png)
 
 #### Changelog:
 - Neu [31.01.2024] ⚠️️**Alle M1 Modelle können im Widget konfiguriert werden**⚠️
